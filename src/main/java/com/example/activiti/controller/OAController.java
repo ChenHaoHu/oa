@@ -82,11 +82,37 @@ public class OAController {
 
 
     /**
+     * 流程主页
+     */
+    @RequestMapping(value = "/data/proid/{proid}")
+    public Object proidData(@PathVariable("proid")String proid){
+        List<HashMap<String,String>> res = new ArrayList<>();
+        List<Task> list = taskService.createTaskQuery().processInstanceId(proid).list();
+        list.forEach(task -> {
+            HashMap<String, String> map = new HashMap<>();
+            map.put("id",task.getId());
+            map.put("name",task.getName());
+            map.put("assignee",task.getAssignee());
+            map.put("ProcessInstanceId",task.getProcessInstanceId());
+            map.put("ProcessInstanceId",task.getProcessDefinitionId());
+            res.add(map);
+        });
+        return res;
+    }
+
+    /**
      * 审核步骤
      */
     @RequestMapping(value = "/pass/{taskid}")
     public Object passTask(@PathVariable("taskid")String taskid){
         Task task = taskService.createTaskQuery().taskId(taskid).singleResult();
+
+        if(task == null){
+            HashMap<String, String> map = new HashMap<>();
+
+            map.put("state","没有这个任务");
+            return map;
+        }
         taskService.complete(task.getId());
         HashMap<String, String> map = new HashMap<>();
         map.put("id",task.getId());

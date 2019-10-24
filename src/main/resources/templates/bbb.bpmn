@@ -13,7 +13,11 @@
     <userTask activiti:assignee="hcy" completionQuantity="1" id="_3" implementation="##unspecified" isForCompensation="false" name="UserTask1" startQuantity="1">
       <extensionElements>
         <modeler:initiator-can-complete xmlns:modeler="http://activiti.com/modeler">
-          <initiator-can-complete><![CDATA[false]]></initiator-can-complete>
+          <initiator-can-complete>
+            <initiator-can-complete>
+              <initiator-can-complete><![CDATA[false]]></initiator-can-complete>
+            </initiator-can-complete>
+          </initiator-can-complete>
         </modeler:initiator-can-complete>
       </extensionElements>
       <incoming>_4</incoming>
@@ -24,7 +28,11 @@
       <extensionElements>
         <activiti:taskListener class="com.example.activiti.listen.TaskListeners" event="create"/>
         <modeler:initiator-can-complete xmlns:modeler="http://activiti.com/modeler">
-          <initiator-can-complete><![CDATA[false]]></initiator-can-complete>
+          <initiator-can-complete>
+            <initiator-can-complete>
+              <initiator-can-complete><![CDATA[false]]></initiator-can-complete>
+            </initiator-can-complete>
+          </initiator-can-complete>
         </modeler:initiator-can-complete>
       </extensionElements>
       <incoming>_6</incoming>
@@ -45,7 +53,7 @@
       <bpmndi:BPMNShape bpmnElement="_2" id="Yaoqiang-_2">
         <omgdc:Bounds height="32.0" width="32.0" x="230.0" y="1.0"/>
         <bpmndi:BPMNLabel>
-          <omgdc:Bounds height="19.84" width="56.0" x="218.0" y="41.08"/>
+          <omgdc:Bounds height="19.84" width="56.0" x="218.0" y="41.04"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="_3" id="Yaoqiang-_3">
@@ -63,7 +71,7 @@
       <bpmndi:BPMNShape bpmnElement="_7" id="Yaoqiang-_7">
         <omgdc:Bounds height="32.0" width="32.0" x="415.0" y="251.0"/>
         <bpmndi:BPMNLabel>
-          <omgdc:Bounds height="19.84" width="51.0" x="405.5" y="291.08"/>
+          <omgdc:Bounds height="19.84" width="51.0" x="405.5" y="291.04"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge bpmnElement="_8" id="Yaoqiang-_8">
