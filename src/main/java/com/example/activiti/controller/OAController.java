@@ -51,6 +51,7 @@ public class OAController {
         list.add("cww");
         list.add("cly");
         map.put("users",list);
+        map.put("num",1);
         ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(deploy,map);
         map.put("id",processInstance.getId());
         map.put("name",processInstance.getName());

@@ -1,14 +1,9 @@
 package com.example.activiti.listen;
 
-
-
-
-
 import org.activiti.engine.delegate.DelegateTask;
 import org.activiti.engine.delegate.TaskListener;
-
-import java.util.ArrayList;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**
@@ -17,20 +12,15 @@ import java.util.ArrayList;
  *
  * */
 public class TaskListeners implements TaskListener {
+	Logger logger = LoggerFactory.getLogger(TaskListeners.class);
 
 	@Override
 	public void notify(DelegateTask delegateTask) {
-		ArrayList<String> list = new ArrayList<>();
-//		list.add("user1");
-//		list.add("user2");
-//		list.add("user");
-//		delegateTask.addCandidateUsers(list);
-		list.add("user1__2");
-		list.add("user2__2");
-		list.add("user3__2");
-		delegateTask.setVariable("num",2);
-		delegateTask.setVariable("users",list);
+		ActivitiTaskListener listen = ActivitiConfig.TaskListenMap.get(delegateTask.getName());
+		if (listen!=null){
+		listen.notify(delegateTask,delegateTask.getEventName());
+		}else{
+			//logger.info("Task : "+delegateTask.getName()+" id : "+delegateTask.getId()+"没有设置监听器");
+		}
 	}
-
-
 }
