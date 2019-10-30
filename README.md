@@ -13,4 +13,4 @@
 
 > ##**流程图**
 
-![流程图]("/src/main/resources/templates/oa.png")
+![流程图](/src/main/resources/templates/oa.png)
