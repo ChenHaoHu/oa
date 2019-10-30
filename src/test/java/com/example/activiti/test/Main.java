@@ -184,7 +184,6 @@ public class Main {
                 taskService.complete(task.getId());
             });
 
-
             taskService.createTaskQuery().processInstanceId("95001").list().forEach(task -> {
                 System.out.println(task.getId()); //95008
                 System.out.println(task.getName()); //UserTask

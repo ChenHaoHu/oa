@@ -13,9 +13,9 @@
     <userTask activiti:assignee="${assignee}" completionQuantity="1" id="task_stus" implementation="##unspecified" isForCompensation="false" name="stus" startQuantity="1">
       <documentation id="task_stus_D_1" textFormat="text/plain"><![CDATA[学生协会审核]]></documentation>
       <extensionElements>
-        <activiti:executionListener class="com.example.activiti.listen.ExecutionListeners" event="start"/>
-        <activiti:executionListener class="com.example.activiti.listen.ExecutionListeners" event="end"/>
-        <activiti:taskListener class="com.example.activiti.listen.TaskListeners" event="all"/>
+        <activiti:executionListener class="com.example.activiti.activitilisten.ExecutionListeners" event="start"/>
+        <activiti:executionListener class="com.example.activiti.activitilisten.ExecutionListeners" event="end"/>
+        <activiti:taskListener class="com.example.activiti.activitilisten.TaskListeners" event="all"/>
       </extensionElements>
       <incoming>flow1</incoming>
       <outgoing>flow2</outgoing>
@@ -30,8 +30,8 @@
     <serviceTask completionQuantity="1" id="stu_service" implementation="##WebService" isForCompensation="false" name="stu_service" startQuantity="1">
       <documentation id="stu_service_D_1" textFormat="text/plain"><![CDATA[学生审核过后的一些处理]]></documentation>
       <extensionElements>
-        <activiti:executionListener class="com.example.activiti.listen.ExecutionListeners" event="start"/>
-        <activiti:executionListener class="com.example.activiti.listen.ExecutionListeners" event="end"/>
+        <activiti:executionListener class="com.example.activiti.activitilisten.ExecutionListeners" event="start"/>
+        <activiti:executionListener class="com.example.activiti.activitilisten.ExecutionListeners" event="end"/>
       </extensionElements>
       <incoming>flow2</incoming>
       <outgoing>flow3</outgoing>
@@ -39,9 +39,9 @@
     <userTask activiti:assignee="${assignee}" completionQuantity="1" id="task_teas" implementation="##unspecified" isForCompensation="false" name="teas" startQuantity="1">
       <documentation id="task_teas_D_1" textFormat="text/plain"><![CDATA[教师顺序审核]]></documentation>
       <extensionElements>
-        <activiti:executionListener class="com.example.activiti.listen.ExecutionListeners" event="start"/>
-        <activiti:executionListener class="com.example.activiti.listen.ExecutionListeners" event="end"/>
-        <activiti:taskListener class="com.example.activiti.listen.TaskListeners" event="all"/>
+        <activiti:executionListener class="com.example.activiti.activitilisten.ExecutionListeners" event="start"/>
+        <activiti:executionListener class="com.example.activiti.activitilisten.ExecutionListeners" event="end"/>
+        <activiti:taskListener class="com.example.activiti.activitilisten.TaskListeners" event="all"/>
       </extensionElements>
       <incoming>flow3</incoming>
       <outgoing>flow4</outgoing>
@@ -59,7 +59,7 @@
       <bpmndi:BPMNShape bpmnElement="startevent1" id="Yaoqiang-startevent1">
         <omgdc:Bounds height="32.0" width="32.0" x="315.0" y="20.0"/>
         <bpmndi:BPMNLabel>
-          <omgdc:Bounds height="19.84" width="29.0" x="316.5" y="60.08"/>
+          <omgdc:Bounds height="19.84" width="29.0" x="316.5" y="60.06"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="task_stus" id="Yaoqiang-task_stus">
@@ -71,7 +71,7 @@
       <bpmndi:BPMNShape bpmnElement="endevent1" id="Yaoqiang-endevent1">
         <omgdc:Bounds height="32.0" width="32.0" x="315.0" y="380.0"/>
         <bpmndi:BPMNLabel>
-          <omgdc:Bounds height="19.84" width="24.0" x="319.0" y="420.08"/>
+          <omgdc:Bounds height="19.84" width="24.0" x="319.0" y="420.06"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="stu_service" id="Yaoqiang-stu_service">
@@ -87,31 +87,31 @@
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge bpmnElement="flow4" id="Yaoqiang-flow4">
-        <omgdi:waypoint x="331.0" y="345.0"/>
-        <omgdi:waypoint x="331.0" y="380.0"/>
+        <omgdi:waypoint x="331.0" y="344.72222222222223"/>
+        <omgdi:waypoint x="331.0" y="379.73003663050275"/>
         <bpmndi:BPMNLabel>
-          <omgdc:Bounds height="19.84" width="6.0" x="328.0" y="352.58"/>
+          <omgdc:Bounds height="19.84" width="6.0" x="328.0" y="352.31"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="flow3" id="Yaoqiang-flow3">
-        <omgdi:waypoint x="332.5" y="255.0"/>
-        <omgdi:waypoint x="332.5" y="290.0"/>
+        <omgdi:waypoint x="332.5" y="254.72222222222223"/>
+        <omgdi:waypoint x="332.5" y="289.72222222222223"/>
         <bpmndi:BPMNLabel>
-          <omgdc:Bounds height="19.84" width="6.0" x="329.5" y="262.58"/>
+          <omgdc:Bounds height="19.84" width="6.0" x="329.5" y="262.3"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="flow2" id="Yaoqiang-flow2">
-        <omgdi:waypoint x="332.5" y="157.0"/>
-        <omgdi:waypoint x="332.5" y="200.0"/>
+        <omgdi:waypoint x="332.5" y="156.72222222222223"/>
+        <omgdi:waypoint x="332.5" y="199.72222222222223"/>
         <bpmndi:BPMNLabel>
-          <omgdc:Bounds height="19.84" width="6.0" x="329.5" y="168.58"/>
+          <omgdc:Bounds height="19.84" width="6.0" x="329.5" y="168.3"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="flow1" id="Yaoqiang-flow1">
-        <omgdi:waypoint x="331.0" y="52.0"/>
-        <omgdi:waypoint x="331.0" y="102.0"/>
+        <omgdi:waypoint x="331.0" y="51.714407813941705"/>
+        <omgdi:waypoint x="331.0" y="101.72222222222223"/>
         <bpmndi:BPMNLabel>
-          <omgdc:Bounds height="19.84" width="6.0" x="328.0" y="67.08"/>
+          <omgdc:Bounds height="19.84" width="6.0" x="328.0" y="66.8"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>

@@ -1,6 +1,9 @@
-package com.example.activiti.listen;
+package com.example.activiti.activitilisten;
 
 
+import com.example.activiti.listen.StuServiceListener;
+import com.example.activiti.listen.StuTaskListener;
+import com.example.activiti.listen.TeaTaskListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 

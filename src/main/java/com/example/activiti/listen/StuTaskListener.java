@@ -1,10 +1,9 @@
 package com.example.activiti.listen;
 
+import com.example.activiti.activitilisten.ActivitiTaskListener;
 import org.activiti.engine.delegate.DelegateExecution;
 import org.activiti.engine.delegate.DelegateTask;
 import org.springframework.stereotype.Component;
-
-import java.util.Map;
 
 @Component
 public class StuTaskListener implements ActivitiTaskListener {
