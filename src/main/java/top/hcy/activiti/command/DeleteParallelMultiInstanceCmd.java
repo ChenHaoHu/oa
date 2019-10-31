@@ -17,7 +17,7 @@ import org.activiti.engine.impl.util.Activiti5Util;
 import org.activiti.engine.impl.util.ProcessDefinitionUtil;
 import org.activiti.engine.repository.ProcessDefinition;
 
-public class DeleteMultiInstanceCmd implements Command {
+public class DeleteParallelMultiInstanceCmd implements Command {
     protected final String NUMBER_OF_INSTANCES = "nrOfInstances";
     protected final String NUMBER_OF_ACTIVE_INSTANCES = "nrOfActiveInstances";
     protected final String NUMBER_OF_COMPLETED_INSTANCES = "nrOfCompletedInstances";
@@ -26,7 +26,7 @@ public class DeleteMultiInstanceCmd implements Command {
     private String taskId;
     private Boolean isNormalComplete;
 
-    public DeleteMultiInstanceCmd(String taskId,boolean isNormalComplete) {
+    public DeleteParallelMultiInstanceCmd(String taskId, boolean isNormalComplete) {
         this.taskId = taskId;
         this.isNormalComplete = isNormalComplete;
     }

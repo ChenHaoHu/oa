@@ -44,7 +44,7 @@ public class Main2 {
             taskService.saveTask(task);
             // System.out.println(task.getExecutionId());
             // processEngine.getManagementService().executeCommand(new AddMultiInstanceCmd("9","test"));
-            // processEngine.getManagementService().executeCommand(new DeleteMultiInstanceCmd("30",true));
+            // processEngine.getManagementService().executeCommand(new DeleteParallelMultiInstanceCmd("30",true));
         });
     }
 

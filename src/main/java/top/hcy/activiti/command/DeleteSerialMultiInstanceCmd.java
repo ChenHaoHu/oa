@@ -16,19 +16,18 @@ import org.activiti.engine.impl.util.ProcessDefinitionUtil;
 
 import java.util.List;
 
-public class AddMultiInstanceCmd implements Command {
+public class DeleteSerialMultiInstanceCmd implements Command {
     protected final String NUMBER_OF_INSTANCES = "nrOfInstances";
     protected final String NUMBER_OF_ACTIVE_INSTANCES = "nrOfActiveInstances";
     private String multiRootExecutionId;
-    private String addUserTaskAssign;
+    private String deleUserTaskAssign;
     private String usersStr;
 
-    public AddMultiInstanceCmd(String multiRootExecutionId, String addUserTaskAssign,String usersStr) {
+    public DeleteSerialMultiInstanceCmd(String multiRootExecutionId,String deleUserTaskAssign, String usersStr) {
         this.multiRootExecutionId = multiRootExecutionId;
-        this.addUserTaskAssign = addUserTaskAssign;
+        this.deleUserTaskAssign = deleUserTaskAssign;
         this.usersStr = usersStr;
     }
-
 
     public Object execute(CommandContext commandContext) {
         ExecutionEntityManager executionEntityManager = commandContext.getExecutionEntityManager();
@@ -41,43 +40,25 @@ public class AddMultiInstanceCmd implements Command {
         if(loopCharacteristics == null){
             throw new ActivitiException("此节点不是多实例节点");
         }
-        //判断是否是并行多实例
         if(loopCharacteristics.isSequential()){
-            //throw new ActivitiException("此节点为串行节点");
-            // 修改
             List users = (List)multiExecutionEntity.getVariable(usersStr);
-            users.add(Integer.valueOf(String.valueOf(multiExecutionEntity.getVariable("nrOfCompletedInstances")))+1,addUserTaskAssign);
+            Integer nrOfCompletedInstances = (Integer)multiExecutionEntity.getVariable("nrOfCompletedInstances");
+            int i = users.indexOf(deleUserTaskAssign);
+            if (i<=nrOfCompletedInstances){
+                return null;
+            }else{
+                users.remove(deleUserTaskAssign);
+            }
             multiExecutionEntity.setVariable(usersStr,users);
-            multiExecutionEntity.setVariable("nrOfInstances",Integer.valueOf(String.valueOf(multiExecutionEntity.getVariable("nrOfInstances")))+1);
+            multiExecutionEntity.setVariable("nrOfInstances",Integer.valueOf(String.valueOf(multiExecutionEntity.getVariable("nrOfInstances")))-1);
             users.forEach(o -> {
                 System.out.print(o+"____");
             });
             System.out.println();
+
+
             return null;
         }
-        //创建新的子实例
-        ExecutionEntity childExecution = executionEntityManager.createChildExecution(multiExecutionEntity);
-        //获取并为新的执行实例设置当前活动节点
-        UserTask currentFlowElement = (UserTask) multiExecutionEntity.getCurrentFlowElement();
-        //设置处理人
-        currentFlowElement.setAssignee(addUserTaskAssign);
-        childExecution.setCurrentFlowElement(currentFlowElement);
-
-        //获取设置变量
-        Integer nrOfInstances = (Integer) multiExecutionEntity.getVariableLocal(NUMBER_OF_INSTANCES);
-        Integer nrOfActiveInstances = (Integer) multiExecutionEntity.getVariableLocal(NUMBER_OF_ACTIVE_INSTANCES);
-
-        multiExecutionEntity.setVariableLocal(NUMBER_OF_INSTANCES,nrOfInstances+1);
-        multiExecutionEntity.setVariableLocal(NUMBER_OF_ACTIVE_INSTANCES,nrOfActiveInstances+1);
-
-        //通知活动开始
-        HistoryManager historyManager = commandContext.getHistoryManager();
-        historyManager.recordActivityStart(childExecution);
-        //获取处理行为类
-        ParallelMultiInstanceBehavior prallelMultiInstanceBehavior = (ParallelMultiInstanceBehavior) miActivityElement.getBehavior();
-        AbstractBpmnActivityBehavior innerActivityBehavior = prallelMultiInstanceBehavior.getInnerActivityBehavior();
-        //执行
-        innerActivityBehavior.execute(childExecution);
         return null;
     }
 

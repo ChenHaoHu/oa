@@ -1,7 +1,7 @@
 package top.hcy.activiti.controller;
 
 import top.hcy.activiti.command.AddMultiInstanceCmd;
-import top.hcy.activiti.command.DeleteMultiInstanceCmd;
+import top.hcy.activiti.command.DeleteParallelMultiInstanceCmd;
 import org.activiti.engine.*;
 import org.activiti.engine.repository.Deployment;
 import org.activiti.engine.runtime.Execution;
@@ -11,10 +11,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import top.hcy.activiti.command.DeleteSerialMultiInstanceCmd;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 @RestController
@@ -135,16 +137,12 @@ public class OAController {
     @RequestMapping(value = "/task/user/add")
     public Object addTask(@RequestParam("process")String processid,
                           @RequestParam("user")String user){
-        int executionid = 0;
-        List<Execution> list = runtimeService.createExecutionQuery().processInstanceId(processid).list();
-        for (int i = 0; i < list.size(); i++) {
-            if (list.get(i).getParentId()!=null){
-                if (Integer.valueOf(list.get(i).getParentId()) > executionid){
-                    executionid = Integer.valueOf(list.get(i).getParentId());
-                }
-            }
+        String executionid = "";
+        List<Execution> list = runtimeService.createExecutionQuery().processInstanceId(processid).parentId(processid).list();
+        if (list.size() == 1){
+            executionid = list.get(0).getId();
         }
-        if(executionid == 0){
+        if(executionid == ""){
             HashMap<String, String> map = new HashMap<>();
             map.put("state","没有这个流程");
             return map;
@@ -157,22 +155,45 @@ public class OAController {
 
 
     /**
-     * 减签
+     * 并行减签
      * @param taskid
      * @return
      */
-    @RequestMapping(value = "/task/user/dele")
-    public Object deleteTask(@RequestParam("taskid")String taskid ){
-
+    @RequestMapping(value = "/task/parallel/dele")
+    public Object deleteParallelTask(@RequestParam("taskid")String taskid ){
         Task task = taskService.createTaskQuery().taskId(taskid).singleResult();
-
         if(task == null){
             HashMap<String, String> map = new HashMap<>();
 
             map.put("state","没有这个任务");
             return map;
         }
-        processEngine.getManagementService().executeCommand(new DeleteMultiInstanceCmd(taskid,true));
+        processEngine.getManagementService().executeCommand(new DeleteParallelMultiInstanceCmd(taskid,true));
+        HashMap<String, String> map = new HashMap<>();
+        map.put("state","减签成功");
+        return map;
+    }
+
+
+    /**
+     * 串行减签——只能当前任务之后的签
+     * @param
+     * @return
+     */
+    @RequestMapping(value = "/task/serial /dele")
+    public Object deleteSerialTask(@RequestParam("assign")String assign,
+                                   @RequestParam("process")String processid){
+        String executionid = "";
+        List<Execution> list = runtimeService.createExecutionQuery().processInstanceId(processid).parentId(processid).list();
+        if (list.size() == 1){
+            executionid = list.get(0).getId();
+        }
+        if(executionid == ""){
+            HashMap<String, String> map = new HashMap<>();
+            map.put("state","没有这个流程");
+            return map;
+        }
+        processEngine.getManagementService().executeCommand(new DeleteSerialMultiInstanceCmd(String.valueOf(executionid),assign,"users"));
         HashMap<String, String> map = new HashMap<>();
         map.put("state","减签成功");
         return map;
