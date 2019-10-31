@@ -17,16 +17,14 @@ public class ActivitiConfig {
 
   @Autowired
   StuTaskListener stuPassListen;
-
   @Autowired
   TeaTaskListener teaTaskListener;
-
   @Autowired
   StuServiceListener stuServiceListener;
 
-
   @Autowired
   private void initActivitiTaskListen(){
+    //key 为 task 的 NAME
     TaskListenMap.put("stus",stuPassListen);
     TaskListenMap.put("teas",teaTaskListener);
     return;
@@ -34,6 +32,7 @@ public class ActivitiConfig {
 
   @Autowired
   private void initActivitiExecutionListen(){
+    //key 为 Execution 的 ID  或者 task 的 ID
     ExecutionListenMap.put("stu_service",stuServiceListener);
     return;
   }
