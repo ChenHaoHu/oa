@@ -1,17 +1,15 @@
-package com.example.activiti.controller;
+package top.hcy.activiti.controller;
 
-import com.example.activiti.command.AddMultiInstanceCmd;
-import com.example.activiti.command.DeleteMultiInstanceCmd;
+import top.hcy.activiti.command.AddMultiInstanceCmd;
+import top.hcy.activiti.command.DeleteMultiInstanceCmd;
 import org.activiti.engine.*;
 import org.activiti.engine.repository.Deployment;
 import org.activiti.engine.runtime.Execution;
 import org.activiti.engine.runtime.ProcessInstance;
 import org.activiti.engine.task.Task;
-import org.activiti.engine.task.TaskQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
@@ -151,7 +149,7 @@ public class OAController {
             map.put("state","没有这个流程");
             return map;
         }
-        processEngine.getManagementService().executeCommand(new AddMultiInstanceCmd(String.valueOf(executionid),user));
+        processEngine.getManagementService().executeCommand(new AddMultiInstanceCmd(String.valueOf(executionid),user,"users"));
         HashMap<String, String> map = new HashMap<>();
         map.put("state","加签成功");
         return map;

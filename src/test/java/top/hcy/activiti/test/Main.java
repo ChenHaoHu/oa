@@ -1,4 +1,4 @@
-package com.example.activiti.test;
+package top.hcy.activiti.test;
 
 import org.activiti.bpmn.model.UserTask;
 import org.activiti.engine.RepositoryService;

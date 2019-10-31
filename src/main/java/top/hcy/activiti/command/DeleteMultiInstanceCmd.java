@@ -1,4 +1,4 @@
-package com.example.activiti.command;
+package top.hcy.activiti.command;
 
 import org.activiti.bpmn.model.Activity;
 import org.activiti.bpmn.model.BpmnModel;

@@ -1,13 +1,7 @@
-package com.example.activiti.test;
+package top.hcy.activiti.test;
 
-import com.example.activiti.command.AddMultiInstanceCmd;
-import com.example.activiti.command.DeleteMultiInstanceCmd;
 import org.activiti.engine.*;
 import org.activiti.engine.history.HistoricTaskInstance;
-import org.activiti.engine.repository.Deployment;
-import org.activiti.engine.repository.ProcessDefinition;
-import org.activiti.engine.runtime.Execution;
-import org.activiti.engine.runtime.ProcessInstance;
 import org.activiti.engine.task.Task;
 import org.junit.Test;
 import org.junit.runner.RunWith;

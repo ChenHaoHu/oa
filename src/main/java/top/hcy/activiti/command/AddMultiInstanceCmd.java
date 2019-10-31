@@ -1,4 +1,4 @@
-package com.example.activiti.command;
+package top.hcy.activiti.command;
 
 import org.activiti.bpmn.model.Activity;
 import org.activiti.bpmn.model.BpmnModel;
@@ -14,15 +14,19 @@ import org.activiti.engine.impl.persistence.entity.ExecutionEntity;
 import org.activiti.engine.impl.persistence.entity.ExecutionEntityManager;
 import org.activiti.engine.impl.util.ProcessDefinitionUtil;
 
+import java.util.List;
+
 public class AddMultiInstanceCmd implements Command {
     protected final String NUMBER_OF_INSTANCES = "nrOfInstances";
     protected final String NUMBER_OF_ACTIVE_INSTANCES = "nrOfActiveInstances";
     private String multiRootExecutionId;
     private String addUserTaskAssign;
+    private String usersStr;
 
-    public AddMultiInstanceCmd(String multiRootExecutionId, String addUserTaskAssign) {
+    public AddMultiInstanceCmd(String multiRootExecutionId, String addUserTaskAssign,String usersStr) {
         this.multiRootExecutionId = multiRootExecutionId;
         this.addUserTaskAssign = addUserTaskAssign;
+        this.usersStr = usersStr;
     }
 
 
@@ -39,8 +43,13 @@ public class AddMultiInstanceCmd implements Command {
         }
         //判断是否是并行多实例
         if(loopCharacteristics.isSequential()){
-            throw new ActivitiException("此节点为串行节点");
-
+            //throw new ActivitiException("此节点为串行节点");
+            // 修改
+            List users = (List)multiExecutionEntity.getVariable(usersStr);
+            users.add(Integer.valueOf(String.valueOf(multiExecutionEntity.getVariable("nrOfCompletedInstances")))+1,addUserTaskAssign);
+            multiExecutionEntity.setVariable(usersStr,users);
+            multiExecutionEntity.setVariable("nrOfInstances",Integer.valueOf(String.valueOf(multiExecutionEntity.getVariable("nrOfInstances")))+1);
+            return null;
         }
         //创建新的子实例
         ExecutionEntity childExecution = executionEntityManager.createChildExecution(multiExecutionEntity);

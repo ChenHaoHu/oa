@@ -1,4 +1,4 @@
-package com.example.activiti;
+package top.hcy.activiti;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
