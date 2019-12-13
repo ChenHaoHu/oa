@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" xmlns:tns="http://www.activiti.org/test" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:yaoqiang="http://bpmn.sourceforge.net" exporter="Yaoqiang BPMN Editor" exporterVersion="5.3" expressionLanguage="http://www.w3.org/1999/XPath" id="_1572415128104" name="" targetNamespace="http://www.activiti.org/test" typeLanguage="http://www.w3.org/2001/XMLSchema" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL http://bpmn.sourceforge.net/schemas/BPMN20.xsd">
+  <process id="myProcess" isClosed="false" isExecutable="true" name="My process" processType="None">
+    <extensionElements>
+      <yaoqiang:description/>
+      <yaoqiang:pageFormat height="841.8897637795276" imageableHeight="831.8897637795276" imageableWidth="588.1102362204724" imageableX="5.0" imageableY="5.0" orientation="0" width="598.1102362204724"/>
+      <yaoqiang:page background="#FFFFFF" horizontalCount="1" verticalCount="1"/>
+    </extensionElements>
+    <startEvent id="startevent1" isInterrupting="true" name="Start" parallelMultiple="false">
+      <outgoing>flow1</outgoing>
+      <outputSet/>
+    </startEvent>
+    <userTask activiti:assignee="${assignee}" completionQuantity="1" id="task_stus" implementation="##unspecified" isForCompensation="false" name="stus" startQuantity="1">
+      <documentation id="task_stus_D_1" textFormat="text/plain"><![CDATA[学生协会审核]]></documentation>
+      <extensionElements>
+        <activiti:executionListener class="top.hcy.activiti.activitilisten.ExecutionListeners" event="start"/>
+        <activiti:executionListener class="top.hcy.activiti.activitilisten.ExecutionListeners" event="end"/>
+        <activiti:taskListener class="top.hcy.activiti.activitilisten.TaskListeners" event="all"/>
+      </extensionElements>
+      <incoming>flow1</incoming>
+      <outgoing>flow2</outgoing>
+      <multiInstanceLoopCharacteristics activiti:collection="${users1}" activiti:elementVariable="assignee" behavior="All" isSequential="false">
+        <completionCondition><![CDATA[${nrOfCompletedInstances/nrOfInstances >= 0.5}]]></completionCondition>
+      </multiInstanceLoopCharacteristics>
+    </userTask>
+    <endEvent id="endevent1" name="End">
+      <incoming>flow4</incoming>
+      <inputSet/>
+    </endEvent>
+    <serviceTask completionQuantity="1" id="stu_service" implementation="##WebService" isForCompensation="false" name="stu_service" startQuantity="1">
+      <documentation id="stu_service_D_1" textFormat="text/plain"><![CDATA[学生审核过后的一些处理]]></documentation>
+      <extensionElements>
+        <activiti:executionListener class="top.hcy.activiti.activitilisten.ExecutionListeners" event="start"/>
+        <activiti:executionListener class="top.hcy.activiti.activitilisten.ExecutionListeners" event="end"/>
+      </extensionElements>
+      <incoming>flow2</incoming>
+      <outgoing>flow3</outgoing>
+    </serviceTask>
+    <userTask activiti:assignee="${assignee}" completionQuantity="1" id="task_teas" implementation="##unspecified" isForCompensation="false" name="teas" startQuantity="1">
+      <documentation id="task_teas_D_1" textFormat="text/plain"><![CDATA[教师顺序审核]]></documentation>
+      <extensionElements>
+        <activiti:executionListener class="top.hcy.activiti.activitilisten.ExecutionListeners" event="start"/>
+        <activiti:executionListener class="top.hcy.activiti.activitilisten.ExecutionListeners" event="end"/>
+        <activiti:taskListener class="top.hcy.activiti.activitilisten.TaskListeners" event="all"/>
+      </extensionElements>
+      <incoming>flow3</incoming>
+      <outgoing>flow4</outgoing>
+      <multiInstanceLoopCharacteristics activiti:collection="${users2}" activiti:elementVariable="assignee" behavior="All" isSequential="true">
+        <completionCondition><![CDATA[${nrOfCompletedInstances/nrOfInstances >= 0.5}]]></completionCondition>
+      </multiInstanceLoopCharacteristics>
+    </userTask>
+    <sequenceFlow id="flow1" sourceRef="startevent1" targetRef="task_stus"/>
+    <sequenceFlow id="flow2" sourceRef="task_stus" targetRef="stu_service"/>
+    <sequenceFlow id="flow3" sourceRef="stu_service" targetRef="task_teas"/>
+    <sequenceFlow id="flow4" sourceRef="task_teas" targetRef="endevent1"/>
+  </process>
+  <bpmndi:BPMNDiagram id="Yaoqiang_Diagram-myProcess" name="Untitled Diagram" resolution="96.0">
+    <bpmndi:BPMNPlane bpmnElement="myProcess">
+      <bpmndi:BPMNShape bpmnElement="startevent1" id="Yaoqiang-startevent1">
+        <omgdc:Bounds height="32.0" width="32.0" x="315.0" y="20.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="19.84" width="29.0" x="316.5" y="59.96"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="task_stus" id="Yaoqiang-task_stus">
+        <omgdc:Bounds height="55.0" width="105.0" x="280.0" y="102.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="19.84" width="27.0" x="319.0" y="121.58"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="endevent1" id="Yaoqiang-endevent1">
+        <omgdc:Bounds height="32.0" width="32.0" x="315.0" y="380.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="19.84" width="24.0" x="319.0" y="419.96"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="stu_service" id="Yaoqiang-stu_service">
+        <omgdc:Bounds height="55.0" width="105.0" x="280.0" y="200.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="19.84" width="63.0" x="301.0" y="219.58"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="task_teas" id="Yaoqiang-task_teas">
+        <omgdc:Bounds height="55.0" width="105.0" x="280.0" y="290.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="19.84" width="27.0" x="319.0" y="309.58"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="flow4" id="Yaoqiang-flow4">
+        <omgdi:waypoint x="331.0" y="345.0"/>
+        <omgdi:waypoint x="331.0" y="380.0078144082805"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="19.84" width="6.0" x="328.0" y="352.59"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow3" id="Yaoqiang-flow3">
+        <omgdi:waypoint x="332.5" y="255.0"/>
+        <omgdi:waypoint x="332.5" y="290.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="19.84" width="6.0" x="329.5" y="262.58"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow2" id="Yaoqiang-flow2">
+        <omgdi:waypoint x="332.5" y="157.0"/>
+        <omgdi:waypoint x="332.5" y="200.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="19.84" width="6.0" x="329.5" y="168.58"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow1" id="Yaoqiang-flow1">
+        <omgdi:waypoint x="331.0" y="51.992185591719476"/>
+        <omgdi:waypoint x="331.0" y="102.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="19.84" width="6.0" x="328.0" y="67.08"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>

@@ -1,6 +1,8 @@
 package top.hcy.activiti.activitilisten;
 
 
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 import top.hcy.activiti.listen.StuServiceListener;
 import top.hcy.activiti.listen.StuTaskListener;
 import top.hcy.activiti.listen.TeaTaskListener;
@@ -37,4 +39,28 @@ public class ActivitiConfig {
     return;
   }
 
+
+  /**
+   * @description: CORS跨域配置类
+   * @author: anson
+   * @Date: 2019/9/5 14:54
+   * @version: 1.0
+   */
+
+  @Configuration
+  public class CORSConfiguration extends WebMvcConfigurationSupport
+  {
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+      registry.addMapping("/**")
+              .allowedMethods("GET", "POST", "DELETE", "PUT","PATCH")
+              .allowedOrigins("*")
+              .maxAge(3600)
+              .allowCredentials(true)
+              .allowedHeaders("*");
+      super.addCorsMappings(registry);
+    }
+
+
+  }
 }
